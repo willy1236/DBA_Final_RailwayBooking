@@ -91,7 +91,7 @@
             Controls.Add(textBox2);
             Controls.Add(textBox1);
             Name = "LoginForm";
-            Text = "Form1";
+            Text = "會員登入";
             ResumeLayout(false);
             PerformLayout();
         }

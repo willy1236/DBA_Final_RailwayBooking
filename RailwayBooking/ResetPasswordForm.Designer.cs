@@ -110,7 +110,7 @@
             Controls.Add(textBox1);
             Controls.Add(button1);
             Name = "ResetPasswordForm";
-            Text = "Form1";
+            Text = "重設密碼";
             Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();

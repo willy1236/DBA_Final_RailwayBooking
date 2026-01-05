@@ -8,9 +8,8 @@ namespace RailwayBooking
     public partial class LoginForm : Form
     {
         SHA256 hash = SHA256.Create();
-        byte[] salt, source, crypto;
 
-        SqlConnection conn;
+        SqlConnection conn = new SqlConnection(Global.conn_str);
         SqlCommand command;
         SqlDataReader reader;
         DataTable dt = new DataTable();
@@ -21,7 +20,6 @@ namespace RailwayBooking
 
         private void button1_Click(object sender, EventArgs e)
         {
-            conn = new SqlConnection(@"Data Source=127.0.0.1\SQL2022_1141; Integrated Security=false;user=sqluser;password=123; Initial Catalog=BookTrainTickets");
             conn.Open();
 
             command = new SqlCommand(@"select * from [user] where email = @email", conn);
@@ -39,9 +37,9 @@ namespace RailwayBooking
             DataRow row = dt.Rows[0];
             int ID = Convert.ToInt32(row["user_id"]);
             String pw_hash = row["password_hash"].ToString();
-            salt = Convert.FromBase64String(row["password_salt"].ToString());
-            source = Encoding.Default.GetBytes(textBox2.Text);
-            crypto = hash.ComputeHash(source.Concat(salt).ToArray());
+            byte[] salt = Convert.FromBase64String(row["password_salt"].ToString());
+            byte[] source = Encoding.Default.GetBytes(textBox2.Text);
+            byte[] crypto = hash.ComputeHash(source.Concat(salt).ToArray());
 
             if (pw_hash != Convert.ToBase64String(crypto)){
                 MessageBox.Show("帳號或密碼不正確");
@@ -49,11 +47,11 @@ namespace RailwayBooking
             }
 
             Global.email = row["email"].ToString();
+            Global.user_id = Convert.ToInt32(row["user_id"]);
             MessageBox.Show(Global.email + " 歡迎登入");
 
             LobbyForm form = new LobbyForm();
             form.ShowDialog();
-            conn.Close();
         }
     }
 }

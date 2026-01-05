@@ -27,5 +27,23 @@ namespace RailwayBooking
             ResetPasswordForm form = new ResetPasswordForm();
             form.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BookingTicketsForm form = new BookingTicketsForm();
+            form.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            PersonalTrainTicketForm form = new PersonalTrainTicketForm();
+            form.ShowDialog();
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            TrainStatusForm form = new TrainStatusForm();
+            form.ShowDialog();
+        }
+        
     }
 }
