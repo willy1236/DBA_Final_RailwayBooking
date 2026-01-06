@@ -52,6 +52,7 @@ namespace RailwayBooking
 
             LobbyForm form = new LobbyForm();
             form.ShowDialog();
+            this.Close();
         }
     }
 }

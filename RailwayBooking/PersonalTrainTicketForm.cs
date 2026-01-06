@@ -73,7 +73,7 @@ namespace RailwayBooking
 
         private void TicketLayout(object sender, PrintPageEventArgs e)
         {
-            if (listView1.SelectedItems[0] is not ListViewItem)
+            if (listView1.SelectedItems.Count == 0 || listView1.SelectedItems[0] is not ListViewItem)
             {
                 MessageBox.Show("未選擇車票");
                 return;
@@ -81,42 +81,53 @@ namespace RailwayBooking
             var selectedItem = (ListViewItem)listView1.SelectedItems[0];
 
             Graphics g = e.Graphics;
-            Font titleFont = new("微軟正黑體", 16, FontStyle.Bold);
-            Font contentFont = new("微軟正黑體", 10);
-            Font smallFont = new("微軟正黑體", 8);
+            Font titleFont = new("宋體", 16, FontStyle.Bold);
+            Font contentFont = new("舊式襯線體", 10);
+            Font smallFont = new("宋體", 8);
 
-            int y = 20; // 垂直起始點
+            string imagePath = System.IO.Path.Combine(Application.StartupPath, "Images", "ticket_bg.png");
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                using (Image bgImage = Image.FromFile(imagePath))
+                {
+                    Rectangle rect = new Rectangle(0, 0, 300, 500);
+                    g.DrawImage(bgImage, rect);
+                }
+            }
+
+            int y = 100; // 垂直起始點
 
             //  標題
-            g.DrawString("台灣鐵道車票", titleFont, Brushes.Black, 50, y);
+            g.DrawString("鐵路車票", titleFont, Brushes.Black, 90, y);
             y += 40;
 
             // 分隔線
-            g.DrawLine(Pens.Black, 20, y, 280, y);
-            y += 10;
+            // g.DrawLine(Pens.Black, 20, y, 280, y);
+            y += 100;
 
             // 車次與乘車資訊
-            g.DrawString($"乘車日期: " + selectedItem.SubItems[3].Text, contentFont, Brushes.Black, 20, y);
+            g.DrawString(selectedItem.SubItems[3].Text, contentFont, Brushes.Black, 110, y);
             y += 25;
-            g.DrawString($"起訖站: " + selectedItem.SubItems[4].Text + " -> " + selectedItem.SubItems[6].Text, contentFont, Brushes.Black, 20, y);
+            g.DrawString(selectedItem.SubItems[4].Text + " -> " + selectedItem.SubItems[6].Text, contentFont, Brushes.Black, 90, y);
             y += 25;
-            g.DrawString($"        " + selectedItem.SubItems[5].Text + " -> " + selectedItem.SubItems[7].Text, contentFont, Brushes.Black, 20, y);
+            g.DrawString(selectedItem.SubItems[5].Text + " -> " + selectedItem.SubItems[7].Text, contentFont, Brushes.Black, 90, y);
             y += 25;
-            g.DrawString($"車次: " + selectedItem.SubItems[1].Text + " " + selectedItem.SubItems[2].Text + "  座位: " + selectedItem.SubItems[8].Text, contentFont, Brushes.Black, 20, y);
-            y += 40;
+            g.DrawString(selectedItem.SubItems[1].Text + " " + selectedItem.SubItems[2].Text + " " + selectedItem.SubItems[8].Text, contentFont, Brushes.Black, 85, y);
+            y += 70;
 
             // 價格
-            g.DrawString("總計: NT$ " + selectedItem.SubItems[9].Text, titleFont, Brushes.Black, 100, y);
-            y += 50;
+            g.DrawString("NT$ " + selectedItem.SubItems[9].Text, titleFont, Brushes.Black, 150, y);
+            y += 20;
 
 
             // 註腳
-            g.DrawString("＊限當日當班次有效，逾時不退。", smallFont, Brushes.Black, 20, y + 60);
+            g.DrawString("＊限當日當班次有效，逾時不退。", smallFont, Brushes.Black, 40, y + 60);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems[0] is not ListViewItem)
+            if (listView1.SelectedItems.Count == 0 || listView1.SelectedItems[0] is not ListViewItem)
             {
                 MessageBox.Show("未選擇車票");
                 return;
@@ -177,7 +188,7 @@ namespace RailwayBooking
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems[0] is not ListViewItem)
+            if (listView1.SelectedItems.Count == 0 || listView1.SelectedItems[0] is not ListViewItem)
             {
                 MessageBox.Show("未選擇車票");
                 return;
