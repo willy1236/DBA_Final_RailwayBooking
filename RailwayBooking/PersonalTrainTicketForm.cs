@@ -30,21 +30,21 @@ namespace RailwayBooking
             listView1.GridLines = true;
             listView1.LabelEdit = false;
             listView1.FullRowSelect = true;
-            listView1.Columns.Add("訂單編號", 80);
+            listView1.Columns.Add("訂單編號", 60);
             listView1.Columns.Add("車次", 50);
             listView1.Columns.Add("車種", 80);
             listView1.Columns.Add("乘車日期", 80);
-            listView1.Columns.Add("起點站", 50);
-            listView1.Columns.Add("上車時間", 50);
+            listView1.Columns.Add("起點站", 80);
+            listView1.Columns.Add("上車時間", 80);
             listView1.Columns.Add("終點站", 80);
-            listView1.Columns.Add("下車時間", 150);
-            listView1.Columns.Add("座位", 80);
-            listView1.Columns.Add("總金額", 150);
-            listView1.Columns.Add("訂購時間", 150);
-            listView1.Columns.Add("付款方式", 150);
-            listView1.Columns.Add("訂票到期時間", 150);
-            listView1.Columns.Add("付款時間", 150);
-            listView1.Columns.Add("", 150);
+            listView1.Columns.Add("下車時間", 80);
+            listView1.Columns.Add("座位", 70);
+            listView1.Columns.Add("總金額", 70);
+            listView1.Columns.Add("訂購時間", 130);
+            listView1.Columns.Add("付款方式", 120);
+            listView1.Columns.Add("訂票到期時間", 140);
+            listView1.Columns.Add("付款時間", 140);
+            listView1.Columns.Add("取消時間", 140);
             reload_booking();
         }
 
@@ -79,7 +79,7 @@ namespace RailwayBooking
                 return;
             }
             var selectedItem = (ListViewItem)listView1.SelectedItems[0];
-            
+
             Graphics g = e.Graphics;
             Font titleFont = new("微軟正黑體", 16, FontStyle.Bold);
             Font contentFont = new("微軟正黑體", 10);
@@ -127,7 +127,12 @@ namespace RailwayBooking
                 MessageBox.Show("此車票已付款");
                 return;
             }
-            if (DateTime.Now > DateTime.ParseExact(selectedItem.SubItems[12].Text, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture))
+            if (selectedItem.SubItems[14].Text != "")
+            {
+                MessageBox.Show("此車票已取消");
+                return;
+            }
+            if (DateTime.Now >= DateTime.ParseExact(selectedItem.SubItems[12].Text, "yyyy-MM-dd", CultureInfo.InvariantCulture))
             {
                 MessageBox.Show("此車票已過期");
                 return;
@@ -165,8 +170,36 @@ namespace RailwayBooking
                 item.SubItems.Add(row["付款方式"].ToString());
                 item.SubItems.Add(row["訂票到期時間"].ToString());
                 item.SubItems.Add(row["付款時間"].ToString());
+                item.SubItems.Add(row["取消時間"].ToString());
                 listView1.Items.Add(item);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems[0] is not ListViewItem)
+            {
+                MessageBox.Show("未選擇車票");
+                return;
+            }
+            var selectedItem = (ListViewItem)listView1.SelectedItems[0];
+            if (selectedItem.SubItems[14].Text != "")
+            {
+                MessageBox.Show("此車票已取消");
+                return;
+            }
+            if (DateTime.Now >= DateTime.ParseExact(selectedItem.SubItems[12].Text, "yyyy-MM-dd", CultureInfo.InvariantCulture))
+            {
+                MessageBox.Show("此車票已過期");
+                return;
+            }
+            command = new(@"update [bookings] SET [cancelled_at] = @now where bookings_id = @bookings_id;
+                            DELETE FROM [dbo].[booking_segments] where bookings_id = @bookings_id;", conn);
+            command.Parameters.AddWithValue("@now", DateTime.Now);
+            command.Parameters.AddWithValue("@bookings_id", Convert.ToInt32(selectedItem.SubItems[0].Text));
+            command.ExecuteNonQuery();
+            reload_booking();
+            MessageBox.Show("訂單取消/退票完成");
         }
     }
 }
