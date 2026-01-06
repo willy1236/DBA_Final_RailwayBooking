@@ -28,33 +28,57 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            listView1 = new ListView();
+            button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
-            // dataGridView1
+            // listView1
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(207, 68);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(527, 326);
-            dataGridView1.TabIndex = 0;
+            listView1.Location = new Point(109, 52);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(891, 354);
+            listView1.TabIndex = 0;
+            listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(12, 373);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 1;
+            button1.Text = "列印車票";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(12, 322);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 2;
+            button2.Text = "付款";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // PersonalTrainTicketForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(dataGridView1);
+            ClientSize = new Size(1012, 450);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(listView1);
             Name = "PersonalTrainTicketForm";
-            Text = "PersonalTrainTicketForm";
+            Text = "個人車票";
             Load += PersonalTrainTicketForm_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private ListView listView1;
+        private Button button1;
+        private Button button2;
     }
 }

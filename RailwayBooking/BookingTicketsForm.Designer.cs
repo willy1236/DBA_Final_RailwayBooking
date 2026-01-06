@@ -55,6 +55,7 @@
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 15;
             listBox1.Location = new Point(339, 81);
+            listBox1.Margin = new Padding(5);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(364, 214);
             listBox1.TabIndex = 3;
@@ -117,7 +118,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(486, 326);
+            label3.Location = new Point(431, 330);
             label3.Name = "label3";
             label3.Size = new Size(55, 15);
             label3.TabIndex = 10;

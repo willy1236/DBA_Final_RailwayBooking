@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RailwayBooking
 {
@@ -16,7 +17,6 @@ namespace RailwayBooking
         SqlConnection conn = new SqlConnection(Global.conn_str);
         SqlCommand command;
         SqlDataReader reader;
-        DataTable dt = new DataTable();
         public TrainStatusForm()
         {
             InitializeComponent();
@@ -38,16 +38,34 @@ namespace RailwayBooking
 
             dateTimePicker1.Value = DateTime.Now;
 
+            listView1.View = View.Details;
+            listView1.GridLines = true;
+            listView1.LabelEdit = false;
+            listView1.FullRowSelect = true;
+            listView1.Columns.Add("車次", 50);
+            listView1.Columns.Add("車種", 80);
+            listView1.Columns.Add("起發站", 80);
+            listView1.Columns.Add("到達站", 80);
+            listView1.Columns.Add("行駛時間(分)", 100);
+            listView1.Columns.Add("狀態", 80);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedItem is not KeyValuePair<string, int> || comboBox2.SelectedItem is not KeyValuePair<string, int>)
+            {
+                MessageBox.Show("未選擇起訖站");
+                return;
+            }
+            var selected1 = (KeyValuePair<string, int>)comboBox1.SelectedItem;
+            var selected2 = (KeyValuePair<string, int>)comboBox2.SelectedItem;
+
             command = new(@"SELECT 
                             t.trips_id AS [班次ID],
-                            tr.name AS [車種],
                             sc.train_no AS [車次],
-                            st_start.station_name AS [出發站],
-                            st_end.station_name AS [抵達站],
+                            tr.name AS [車種],
+                            st_start.station_name AS [起發站],
+                            st_end.station_name AS [到達站],
 
                             CONVERT(VARCHAR(5), start_s.dep_time, 108) AS [出發時間],
                             CONVERT(VARCHAR(5), end_s.arr_time, 108) AS [抵達時間],
@@ -77,25 +95,33 @@ namespace RailwayBooking
     
                             AND start_s.stop_seq < end_s.stop_seq
                         ORDER BY start_s.dep_time;", conn);
-            if (comboBox1.SelectedItem is KeyValuePair<string, int> selected1 && comboBox2.SelectedItem is KeyValuePair<string, int> selected2)
+            command.Parameters.Add("@FromStationID", SqlDbType.Int);
+            command.Parameters["@FromStationID"].Value = selected1.Value;
+            command.Parameters.Add("@ToStationID", SqlDbType.Int);
+            command.Parameters["@ToStationID"].Value = selected2.Value;
+            command.Parameters.Add("@TravelDate", SqlDbType.Date);
+            command.Parameters["@TravelDate"].Value = dateTimePicker1.Value;
+            reader = command.ExecuteReader();
+            DataTable dt = new();
+            dt.Load(reader);
+
+            if(dt.Rows.Count == 0)
             {
-                command.Parameters.Add("@FromStationID", SqlDbType.Int);
-                command.Parameters["@FromStationID"].Value = selected1.Value;
-                command.Parameters.Add("@ToStationID", SqlDbType.Int);
-                command.Parameters["@ToStationID"].Value = selected2.Value;
-                command.Parameters.Add("@TravelDate", SqlDbType.Date);
-                command.Parameters["@TravelDate"].Value = dateTimePicker1.Value;
-                reader = command.ExecuteReader();
-                dt.Load(reader);
-            }
-            else
-            {
-                MessageBox.Show("沒有選擇起訖站");
+                MessageBox.Show("查詢時段無班次");
                 return;
             }
 
-            dataGridView1.DataSource = dt;
-            dataGridView1.AutoResizeColumns();
+            listView1.Items.Clear();
+            foreach (DataRow row in dt.Rows)
+            {
+                var item = new ListViewItem(row["車次"].ToString());
+                item.SubItems.Add(row["車種"].ToString());
+                item.SubItems.Add(row["起發站"].ToString());
+                item.SubItems.Add(row["到達站"].ToString());
+                item.SubItems.Add(row["行駛時間(分)"].ToString());
+                item.SubItems.Add(row["狀態"].ToString());
+                listView1.Items.Add(item);
+            }
         }
     }
 }

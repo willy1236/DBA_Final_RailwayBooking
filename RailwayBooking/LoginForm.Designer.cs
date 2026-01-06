@@ -41,7 +41,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(160, 23);
             textBox1.TabIndex = 0;
-            textBox1.Text = "traveler_a@gmail.com";
+            textBox1.Text = "passenger01@gmail.com";
             // 
             // textBox2
             // 

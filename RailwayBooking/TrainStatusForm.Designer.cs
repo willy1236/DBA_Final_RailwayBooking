@@ -33,10 +33,9 @@
             label1 = new Label();
             comboBox1 = new ComboBox();
             button1 = new Button();
-            dataGridView1 = new DataGridView();
             label4 = new Label();
             dateTimePicker1 = new DateTimePicker();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            listView1 = new ListView();
             SuspendLayout();
             // 
             // comboBox2
@@ -83,14 +82,6 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(246, 72);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(689, 321);
-            dataGridView1.TabIndex = 15;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -109,14 +100,22 @@
             dateTimePicker1.TabIndex = 16;
             dateTimePicker1.Value = new DateTime(2026, 1, 5, 23, 57, 15, 0);
             // 
+            // listView1
+            // 
+            listView1.Location = new Point(271, 53);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(539, 359);
+            listView1.TabIndex = 18;
+            listView1.UseCompatibleStateImageBehavior = false;
+            // 
             // TrainStatusForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(947, 450);
+            ClientSize = new Size(836, 450);
+            Controls.Add(listView1);
             Controls.Add(label4);
             Controls.Add(dateTimePicker1);
-            Controls.Add(dataGridView1);
             Controls.Add(button1);
             Controls.Add(comboBox2);
             Controls.Add(label2);
@@ -124,7 +123,6 @@
             Controls.Add(comboBox1);
             Name = "TrainStatusForm";
             Text = "列車動態查詢";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -136,8 +134,8 @@
         private Label label1;
         private ComboBox comboBox1;
         private Button button1;
-        private DataGridView dataGridView1;
         private Label label4;
         private DateTimePicker dateTimePicker1;
+        private ListView listView1;
     }
 }
