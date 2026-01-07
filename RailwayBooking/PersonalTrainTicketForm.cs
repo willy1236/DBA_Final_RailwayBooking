@@ -99,7 +99,7 @@ namespace RailwayBooking
             int y = 100; // 垂直起始點
 
             //  標題
-            g.DrawString("鐵路車票", titleFont, Brushes.Black, 90, y);
+            g.DrawString("鐵路車票", titleFont, Brushes.Black, 95, y);
             y += 40;
 
             // 分隔線

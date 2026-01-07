@@ -54,7 +54,7 @@ namespace RailwayBooking
 
         private void LoadAnnouncements()
         {
-            // 清空目前的列表 (避免重複加入)
+            // 清空目前的列表
             flowLayoutPanel1.Controls.Clear();
 
             // 模擬從資料庫取得資料

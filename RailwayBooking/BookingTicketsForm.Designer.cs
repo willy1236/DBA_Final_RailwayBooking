@@ -118,11 +118,11 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(431, 330);
+            label3.Location = new Point(450, 330);
             label3.Name = "label3";
-            label3.Size = new Size(55, 15);
+            label3.Size = new Size(145, 15);
             label3.TabIndex = 10;
-            label3.Text = "金額為：";
+            label3.Text = "總里程：金額： 可獲得 點";
             // 
             // label4
             // 

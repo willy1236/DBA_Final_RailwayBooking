@@ -72,9 +72,9 @@
             // 
             // button1
             // 
-            button1.Location = new Point(134, 202);
+            button1.Location = new Point(109, 203);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(105, 49);
             button1.TabIndex = 4;
             button1.Text = "登入";
             button1.UseVisualStyleBackColor = true;
