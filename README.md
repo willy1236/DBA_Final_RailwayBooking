@@ -1,6 +1,6 @@
-# Railway Booking System - 火車訂票系統
+# 火車訂票應用程式
 
-一個使用 C# Windows Forms 開發的完整火車票訂購管理系統，提供使用者註冊、登入、訂票、查詢班次、票務管理等功能。
+> 資料庫程式設計與管理期末專題 — 使用 C# Windows Forms 開發的完整火車票訂購管理系統，提供使用者註冊、登入、訂票、查詢班次、票務管理等功能。
 
 ## 目錄
 
@@ -74,19 +74,19 @@ Railway Booking System 是一個功能完整的火車訂票管理系統，支援
 
 ## 技術架構
 
-### 🛠 開發框架
+### 開發框架
 
 - **.NET 8.0** - Windows Desktop Runtime
 - **Windows Forms** - 桌面應用程式介面框架
 - **C# 12** - 程式語言
 
-### 🗄 資料庫
+### 資料庫
 
 - **SQL Server** - 關聯式資料庫管理系統
 - **System.Data.SqlClient** - ADO.NET 資料存取
 - **Stored Procedures** - 預存程序 (CreateBooking, FindAvailableTrips, GetTotalTravelDistance)
 
-### 🔒 安全性
+### 安全性
 
 - **SHA256** - 密碼雜湊演算法
 - **Salt** - 密碼加鹽儲存
